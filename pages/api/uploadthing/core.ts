@@ -1,7 +1,5 @@
-// pages/api/uploadthing/core.ts
-
 import { createRouteHandler } from "uploadthing/next";
-import { ourFileRouter } from "./uploadthing"; // ✅ correct import path
+import { ourFileRouter } from "./index"; // ✅ this is now correct
 
 export const { GET, POST } = createRouteHandler({
   router: ourFileRouter,
