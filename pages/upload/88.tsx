@@ -1,5 +1,3 @@
-// pages/upload/88.tsx
-
 import { useState, ChangeEvent } from "react";
 import { uploadFiles } from "../../lib/uploadthing-react";
 
@@ -12,8 +10,10 @@ export default function Upload88() {
     const fileArray = Array.from(files);
 
     try {
-      // Swap arguments: first the endpoint, then the File[]
-      const res = await uploadFiles("imageUploader", fileArray);
+      // ← pass an object with `files: File[]`
+      const res = await uploadFiles("imageUploader", { files: fileArray });
+
+      // each `r` has a `.url` property
       const urls = res.map((r) => r.url);
       setUploadedUrls((prev) => [...prev, ...urls]);
     } catch (err: any) {
@@ -24,10 +24,11 @@ export default function Upload88() {
   return (
     <div style={{ padding: 40 }}>
       <h1>Upload Your Photos</h1>
-      {/* Standard file picker for multiple files */}
+
+      {/* native picker with multiple support */}
       <input type="file" multiple onChange={handleSelect} />
 
-      {/* Thumbnails */}
+      {/* render thumbnails */}
       <div
         style={{
           display: "flex",
