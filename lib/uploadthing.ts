@@ -1,5 +1,7 @@
+// lib/uploadthing.ts
+
 import { createUploadthing, type FileRouter } from "uploadthing/next-legacy";
-import { UploadThingError } from "uploadthing/server";
+import { UploadThingError } from "uploadthing/server";  // stays the same
 
 const f = createUploadthing();
 
