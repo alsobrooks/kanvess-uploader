@@ -5,7 +5,7 @@ export default function Upload88() {
   return (
     <div>
       <h1>Upload Your Photos</h1>
-      <UploadButton<OurFileRouter>
+      <UploadButton<OurFileRouter, "imageUploader">
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
           alert("Upload complete!");
