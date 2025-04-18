@@ -1,14 +1,20 @@
 // pages/upload/88.tsx
+
 import { useState, ChangeEvent } from "react";
+// 🛠️ Pull in your local hook, not from @uploadthing/react directly
 import { useUploadThing } from "../../lib/uploadthing-react";
 import type { OurFileRouter } from "../../lib/uploadthing";
 
 export default function Upload88() {
+  // 1) State to hold uploaded URLs
   const [uploadedUrls, setUploadedUrls] = useState<string[]>([]);
+
+  // 2) Get the startUpload function for your "imageUploader" endpoint
   const { startUpload } = useUploadThing("imageUploader", {
     onClientUploadComplete: (res) => {
-      // res is an array of { file } entries
-      const urls = res.map((r) => r.file.url);
+      // res is an array of uploaded-file info
+      // the URL for each file is res[i].file.url OR res[i].url
+      const urls = res.map((r) => r.url ?? (r as any).file.url);
       setUploadedUrls((prev) => [...prev, ...urls]);
     },
     onUploadError: (err) => {
@@ -16,7 +22,8 @@ export default function Upload88() {
     },
   });
 
-  const handleSelect = (e: ChangeEvent<HTMLInputElement>) => {
+  // 3) When the user picks files, kick off the upload
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) startUpload(Array.from(files));
   };
@@ -25,10 +32,10 @@ export default function Upload88() {
     <div style={{ padding: 40 }}>
       <h1>Upload Your Photos</h1>
 
-      {/* 1) Pick as many as you like */}
-      <input type="file" multiple onChange={handleSelect} />
+      {/* file picker that allows many */}
+      <input type="file" multiple onChange={handleChange} />
 
-      {/* 2) Show thumbnails */}
+      {/* thumbnails */}
       <div
         style={{
           display: "flex",
