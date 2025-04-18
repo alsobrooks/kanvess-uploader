@@ -1,7 +1,7 @@
 "use client";
 
 import { UploadButton } from "@uploadthing/react";
-import type { OurFileRouter } from "../api/uploadthing/core";
+import type { OurFileRouter } from "../api/uploadthing"; // this is index.ts
 
 export default function Upload88() {
   return (
