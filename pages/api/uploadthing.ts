@@ -1,3 +1,5 @@
+console.log("👉 UPLOADTHING_TOKEN is:", process.env.UPLOADTHING_TOKEN);
+
 // pages/api/uploadthing.ts
 
 // 1️⃣ Use the Pages‑Router helper:
