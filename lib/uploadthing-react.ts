@@ -1,7 +1,6 @@
-// lib/uploadthing-react.ts
 import { generateReactHelpers } from "@uploadthing/react";
+// This line MUST point to the router file in the same folder:
 import type { OurFileRouter } from "./uploadthing";
 
-// This gives you a typed hook and uploadFiles fn
 export const { useUploadThing, uploadFiles } =
   generateReactHelpers<OurFileRouter>();
