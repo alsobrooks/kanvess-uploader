@@ -1,6 +1,18 @@
-import { createRouteHandler } from "uploadthing/next";
-import { ourFileRouter } from "./index";
+import { createUploadthing, type FileRouter } from "uploadthing/server";
+import { UploadThingError } from "uploadthing/server";
 
-export const { GET, POST } = createRouteHandler({
-  router: ourFileRouter,
-});
+const f = createUploadthing();
+
+export const ourFileRouter = {
+  imageUploader: f({ image: { maxFileSize: "4MB" } })
+    .middleware(async () => {
+      // you can customize this later to check for auth
+      return { userId: "test-user" };
+    })
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("✅ Upload complete for userId:", metadata.userId);
+      console.log("File URL:", file.url);
+    }),
+} satisfies FileRouter;
+
+export type OurFileRouter = typeof ourFileRouter;

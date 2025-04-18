@@ -1,12 +1,12 @@
 "use client";
 
 import { UploadButton } from "@uploadthing/react";
-import type { OurFileRouter } from "../api/uploadthing";
+import type { OurFileRouter } from "../../api/uploadthing/core";
 
 export default function Upload88() {
   return (
     <div style={{ padding: 40 }}>
-      <h2>Upload Your Photos</h2>
+      <h2>Upload up to 88 Photos</h2>
       <UploadButton<OurFileRouter, "imageUploader">
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
@@ -14,8 +14,7 @@ export default function Upload88() {
           console.log("Files:", res);
         }}
         onUploadError={(error) => {
-          alert("Upload failed. Try again.");
-          console.error("❌ Upload error:", error);
+          alert(`Error: ${error.message}`);
         }}
       />
     </div>
