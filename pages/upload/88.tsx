@@ -1,7 +1,7 @@
 "use client";
 
 import { UploadButton } from "@uploadthing/react";
-import type { OurFileRouter } from "../api/uploadthing";
+import type { OurFileRouter } from "../api/uploadthing/core";
 
 export default function Upload88() {
   return (
@@ -14,7 +14,7 @@ export default function Upload88() {
           console.log("Files:", res);
         }}
         onUploadError={(error) => {
-          alert("Upload failed. Try again.");
+          alert(`Upload failed. Try again.`);
           console.error("❌ Upload error:", error);
         }}
       />
