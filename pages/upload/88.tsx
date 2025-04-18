@@ -3,16 +3,18 @@ import { UploadButton } from "@uploadthing/react";
 import type { OurFileRouter } from "../../lib/uploadthing";
 
 export default function Upload88() {
+  // Keep track of all uploaded file URLs
   const [uploadedUrls, setUploadedUrls] = useState<string[]>([]);
 
   return (
     <div style={{ padding: 40 }}>
       <h1>Upload Your Photos</h1>
 
-      <UploadButton<OurFileRouter, "imageUploader", true>
+      <UploadButton<OurFileRouter, "imageUploader">
         endpoint="imageUploader"
         multiple
         onClientUploadComplete={(res) => {
+          // res is an array when multiple=true
           const urls = res.map((r) => r.file.url);
           setUploadedUrls((prev) => [...prev, ...urls]);
         }}
