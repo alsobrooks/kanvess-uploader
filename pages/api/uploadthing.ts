@@ -1,6 +1,4 @@
-// pages/api/uploadthing.ts
 import { createUploadthing, type FileRouter } from "uploadthing/server";
-import type { NextApiRequest, NextApiResponse } from "next";
 
 const f = createUploadthing();
 

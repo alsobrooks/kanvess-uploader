@@ -5,20 +5,17 @@ import type { OurFileRouter } from "../api/uploadthing";
 
 export default function Upload88() {
   return (
-    <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
-      <h2 style={{ fontSize: "2rem", marginBottom: "20px" }}>
-        Upload Your Photos
-      </h2>
-
+    <div style={{ padding: 40 }}>
+      <h2>Upload Your Photos</h2>
       <UploadButton<OurFileRouter, "imageUploader">
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
-          console.log("✅ Upload complete:", res);
-          alert("✅ Upload complete!");
+          alert("Upload complete!");
+          console.log("Files:", res);
         }}
         onUploadError={(error) => {
+          alert("Upload failed. Try again.");
           console.error("❌ Upload error:", error);
-          alert("❌ Upload failed. Try again.");
         }}
       />
     </div>
