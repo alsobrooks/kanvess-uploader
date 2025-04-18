@@ -1,0 +1,77 @@
+999-8076fff540bab149.js:1 
+            
+            
+           GET https://kanvess-uploader.vercel.app/api/uploadthing 500 (Internal Server Error)
+(anonymous) @ 999-8076fff540bab149.js:1
+(anonymous) @ 999-8076fff540bab149.js:1
+oP @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+o4 @ framework-b8ed9b642a1d405a.js:1
+o6 @ framework-b8ed9b642a1d405a.js:1
+ud @ framework-b8ed9b642a1d405a.js:1
+c @ framework-b8ed9b642a1d405a.js:1
+z @ framework-b8ed9b642a1d405a.js:1
+999-8076fff540bab149.js:1 
+            
+            
+           POST https://kanvess-uploader.vercel.app/api/uploadthing?actionType=upload&slug=imageUploader 405 (Method Not Allowed)
+try @ 999-8076fff540bab149.js:1
+(anonymous) @ 999-8076fff540bab149.js:1
+eval @ 999-8076fff540bab149.js:1
+runLoop @ 999-8076fff540bab149.js:1
+evaluate @ 999-8076fff540bab149.js:1
+(anonymous) @ 999-8076fff540bab149.js:1
+(anonymous) @ 999-8076fff540bab149.js:1
+Promise.then
+(anonymous) @ 999-8076fff540bab149.js:1
+eval @ 999-8076fff540bab149.js:1
+runLoop @ 999-8076fff540bab149.js:1
+evaluate @ 999-8076fff540bab149.js:1
+t7 @ 999-8076fff540bab149.js:1
+(anonymous) @ 999-8076fff540bab149.js:1
+ne @ 999-8076fff540bab149.js:1
+(anonymous) @ 999-8076fff540bab149.js:1
+Q @ 999-8076fff540bab149.js:1
+pipe @ 999-8076fff540bab149.js:1
+uploadFiles @ 999-8076fff540bab149.js:1
+(anonymous) @ 999-8076fff540bab149.js:1
+await in (anonymous)
+(anonymous) @ 999-8076fff540bab149.js:1
+(anonymous) @ 999-8076fff540bab149.js:1
+onChange @ 999-8076fff540bab149.js:1
+uU @ framework-b8ed9b642a1d405a.js:1
+(anonymous) @ framework-b8ed9b642a1d405a.js:1
+tC @ framework-b8ed9b642a1d405a.js:1
+uW @ framework-b8ed9b642a1d405a.js:1
+sK @ framework-b8ed9b642a1d405a.js:1
+sQ @ framework-b8ed9b642a1d405a.js:1
