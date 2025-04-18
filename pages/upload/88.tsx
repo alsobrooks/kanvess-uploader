@@ -12,13 +12,12 @@ export default function Upload88() {
 
       <UploadButton<OurFileRouter, "imageUploader">
         endpoint="imageUploader"
+        multiple={true}
         onClientUploadComplete={(res) => {
-          console.log("✅ Upload complete:", res);
-          alert("✅ Upload complete!");
+          alert("Upload complete!");
         }}
         onUploadError={(error) => {
-          console.error("❌ Upload error:", error);
-          alert("❌ Upload failed. Try again.");
+          alert("Upload failed. Try again.");
         }}
       />
     </div>
