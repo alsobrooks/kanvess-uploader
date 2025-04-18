@@ -1,5 +1,4 @@
 import { createUploadthing, type FileRouter } from "uploadthing/server";
-import { uploadthingNextHandler } from "uploadthing/next";
 
 const f = createUploadthing();
 
