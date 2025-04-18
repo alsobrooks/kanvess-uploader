@@ -7,17 +7,18 @@ export default function Upload88() {
   return (
     <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
       <h2 style={{ fontSize: "2rem", marginBottom: "20px" }}>
-        Upload up to 88 Photos
+        Upload Your Photos
       </h2>
 
       <UploadButton<OurFileRouter, "imageUploader">
         endpoint="imageUploader"
-        multiple={true}
         onClientUploadComplete={(res) => {
-          alert("Upload complete!");
+          console.log("✅ Upload complete:", res);
+          alert("✅ Upload complete!");
         }}
         onUploadError={(error) => {
-          alert("Upload failed. Try again.");
+          console.error("❌ Upload error:", error);
+          alert("❌ Upload failed. Try again.");
         }}
       />
     </div>
