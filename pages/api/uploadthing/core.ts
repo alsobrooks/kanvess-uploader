@@ -6,7 +6,6 @@ const f = createUploadthing();
 export const ourFileRouter = {
   imageUploader: f({ image: { maxFileSize: "4MB" } })
     .middleware(async () => {
-      // you can customize this later to check for auth
       return { userId: "test-user" };
     })
     .onUploadComplete(async ({ metadata, file }) => {
