@@ -1,7 +1,7 @@
 // pages/upload/88.tsx
+
 import { useState, ChangeEvent } from "react";
 import { uploadFiles } from "../../lib/uploadthing-react";
-import { v4 as uuid } from "uuid"; // you can `npm install uuid`
 
 type UploadItem = {
   id: string;
@@ -15,18 +15,18 @@ export default function Upload88() {
   const handleSelect = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-
-    // Turn FileList into an array
     const fileArray = Array.from(files);
 
-    // For each file, kick off its own upload
-    fileArray.forEach(async (file) => {
-      const id = uuid();
-      // Add a placeholder for this file
+    fileArray.forEach(async (file, idx) => {
+      // create a unique-ish ID using timestamp + index
+      const id = `${Date.now()}-${idx}`;
+      // add a placeholder for this file
       setUploads((u) => [...u, { id, loading: true }]);
 
       try {
+        // upload this single file
         const [res] = await uploadFiles("imageUploader", { files: [file] });
+        // update that item with its real URL
         setUploads((u) =>
           u.map((item) =>
             item.id === id
@@ -36,15 +36,14 @@ export default function Upload88() {
         );
       } catch (err: any) {
         alert(`Upload error for ${file.name}: ${err.message}`);
-        setUploads((u) =>
-          u.filter((item) => item.id !== id)
-        );
+        // remove the placeholder on failure
+        setUploads((u) => u.filter((item) => item.id !== id));
       }
     });
   };
 
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: 40, fontFamily: "sans-serif" }}>
       <h1>Upload Your Photos</h1>
       <input type="file" multiple onChange={handleSelect} />
 
