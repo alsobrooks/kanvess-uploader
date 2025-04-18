@@ -1,26 +1,32 @@
-import { useState } from "react";
-import { UploadButton } from "@uploadthing/react";
-import type { OurFileRouter } from "../../lib/uploadthing";
+import { useState, ChangeEvent } from "react";
+import { uploadFiles } from "../../lib/uploadthing-react";
 
 export default function Upload88() {
   const [uploadedUrls, setUploadedUrls] = useState<string[]>([]);
+
+  const handleSelect = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    // Turn FileList into an array
+    const fileArray = Array.from(files);
+    try {
+      // uploadFiles returns an array of responses with `url`
+      const res = await uploadFiles(fileArray, "imageUploader");
+      const urls = res.map((r) => r.url);
+      setUploadedUrls((prev) => [...prev, ...urls]);
+    } catch (err: any) {
+      alert(`Upload error: ${err.message}`);
+    }
+  };
 
   return (
     <div style={{ padding: 40 }}>
       <h1>Upload Your Photos</h1>
 
-      <UploadButton<OurFileRouter, "imageUploader">
-        endpoint="imageUploader"
-        onClientUploadComplete={(res) => {
-          // `res` is an array of { url } items—one per file
-          const urls = res.map((r) => r.url);
-          setUploadedUrls((prev) => [...prev, ...urls]);
-        }}
-        onUploadError={(error) => {
-          alert(`Upload error: ${error.message}`);
-        }}
-      />
+      {/* 1) A standard file picker that allows multiple */}
+      <input type="file" multiple onChange={handleSelect} />
 
+      {/* 2) Thumbnails */}
       <div
         style={{
           display: "flex",
