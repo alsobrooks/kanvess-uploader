@@ -11,3 +11,4 @@ import { ourFileRouter } from "../../lib/uploadthing";
 export default createRouteHandler({
   router: ourFileRouter,
 });
+
