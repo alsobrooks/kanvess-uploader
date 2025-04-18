@@ -1,38 +1,34 @@
+// pages/upload/88.tsx
 import { useState, ChangeEvent } from "react";
-import { useUploadThing } from "@uploadthing/react";
+import { useUploadThing } from "../../lib/uploadthing-react";
 import type { OurFileRouter } from "../../lib/uploadthing";
 
 export default function Upload88() {
-  // keep track of uploaded URLs
   const [uploadedUrls, setUploadedUrls] = useState<string[]>([]);
-  // get the upload function from UploadThing
-  const { startUpload } = useUploadThing<OurFileRouter>();
-
-  // called when user selects files
-  const handleSelect = async (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
-    // convert FileList to an array
-    const fileArray = Array.from(files);
-    try {
-      // upload all of them to the "imageUploader" endpoint
-      const res = await startUpload(fileArray, { endpoint: "imageUploader" });
-      // extract URLs and add them to state
+  const { startUpload } = useUploadThing("imageUploader", {
+    onClientUploadComplete: (res) => {
+      // res is an array of { file } entries
       const urls = res.map((r) => r.file.url);
       setUploadedUrls((prev) => [...prev, ...urls]);
-    } catch (error: any) {
-      alert(`Upload error: ${error.message}`);
-    }
+    },
+    onUploadError: (err) => {
+      alert(`Upload error: ${err.message}`);
+    },
+  });
+
+  const handleSelect = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) startUpload(Array.from(files));
   };
 
   return (
     <div style={{ padding: 40 }}>
       <h1>Upload Your Photos</h1>
 
-      {/* 1) File picker that allows many files */}
+      {/* 1) Pick as many as you like */}
       <input type="file" multiple onChange={handleSelect} />
 
-      {/* 2) Thumbnails */}
+      {/* 2) Show thumbnails */}
       <div
         style={{
           display: "flex",
