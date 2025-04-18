@@ -1,85 +1,109 @@
 // pages/upload/88.tsx
 import { useState, ChangeEvent } from "react";
 import { uploadFiles } from "../../lib/uploadthing-react";
+import { v4 as uuid } from "uuid"; // you can `npm install uuid`
+
+type UploadItem = {
+  id: string;
+  url?: string;
+  loading: boolean;
+};
 
 export default function Upload88() {
-  const [uploadedUrls, setUploadedUrls] = useState<string[]>([]);
-  const [isUploading, setIsUploading] = useState(false);
+  const [uploads, setUploads] = useState<UploadItem[]>([]);
 
   const handleSelect = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
+
+    // Turn FileList into an array
     const fileArray = Array.from(files);
 
-    setIsUploading(true);
-    try {
-      // Pass files in an object
-      const res = await uploadFiles("imageUploader", { files: fileArray });
-      // Use the new ufsUrl property
-      const urls = res.map((r) => r.ufsUrl);
-      setUploadedUrls((prev) => [...prev, ...urls]);
-    } catch (err: any) {
-      alert(`Upload error: ${err.message}`);
-    } finally {
-      setIsUploading(false);
-    }
+    // For each file, kick off its own upload
+    fileArray.forEach(async (file) => {
+      const id = uuid();
+      // Add a placeholder for this file
+      setUploads((u) => [...u, { id, loading: true }]);
+
+      try {
+        const [res] = await uploadFiles("imageUploader", { files: [file] });
+        setUploads((u) =>
+          u.map((item) =>
+            item.id === id
+              ? { id, url: res.ufsUrl, loading: false }
+              : item
+          )
+        );
+      } catch (err: any) {
+        alert(`Upload error for ${file.name}: ${err.message}`);
+        setUploads((u) =>
+          u.filter((item) => item.id !== id)
+        );
+      }
+    });
   };
 
   return (
-    <div style={{ padding: 40, fontFamily: "sans-serif" }}>
+    <div style={{ padding: 40 }}>
       <h1>Upload Your Photos</h1>
-
       <input type="file" multiple onChange={handleSelect} />
 
-      {/* Loading spinner */}
-      {isUploading && (
-        <div style={{ marginTop: 20 }}>
-          <div className="spinner" />
-          <span>Uploading…</span>
-
-          {/* Simple CSS for the spinner */}
-          <style jsx>{`
-            .spinner {
-              display: inline-block;
-              width: 24px;
-              height: 24px;
-              margin-right: 8px;
-              border: 3px solid rgba(0, 0, 0, 0.2);
-              border-radius: 50%;
-              border-top-color: rgba(0, 0, 0, 0.6);
-              animation: spin 0.6s linear infinite;
-            }
-            @keyframes spin {
-              to { transform: rotate(360deg); }
-            }
-          `}</style>
-        </div>
-      )}
-
-      {/* Thumbnails */}
       <div
         style={{
-          display: "flex",
-          flexWrap: "wrap",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, 100px)",
           gap: 12,
           marginTop: 24,
         }}
       >
-        {uploadedUrls.map((url) => (
-          <img
-            key={url}
-            src={url}
-            alt="Uploaded thumbnail"
+        {uploads.map(({ id, url, loading }) => (
+          <div
+            key={id}
             style={{
               width: 100,
               height: 100,
-              objectFit: "cover",
+              position: "relative",
               borderRadius: 4,
-              border: "1px solid #ddd",
+              overflow: "hidden",
+              background: "#f0f0f0",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
-          />
+          >
+            {loading ? (
+              <div className="thumb-spinner" />
+            ) : (
+              <img
+                src={url}
+                alt="Uploaded thumbnail"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            )}
+          </div>
         ))}
       </div>
+
+      {/* Spinner CSS */}
+      <style jsx>{`
+        .thumb-spinner {
+          width: 24px;
+          height: 24px;
+          border: 3px solid rgba(0, 0, 0, 0.1);
+          border-top-color: rgba(0, 0, 0, 0.5);
+          border-radius: 50%;
+          animation: spin 0.6s linear infinite;
+        }
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
     </div>
   );
 }
