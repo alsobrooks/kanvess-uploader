@@ -5,39 +5,45 @@ import { uploadFiles } from "../../lib/uploadthing-react";
 
 type UploadItem = {
   id: string;
+  file: File;
   url?: string;
-  loading: boolean;
+  uploading: boolean;
 };
 
 export default function Upload88() {
   const [uploads, setUploads] = useState<UploadItem[]>([]);
 
-  const handleSelect = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSelect = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
     const fileArray = Array.from(files);
 
-    fileArray.forEach(async (file, idx) => {
-      // create a unique-ish ID using timestamp + index
-      const id = `${Date.now()}-${idx}`;
-      // add a placeholder for this file
-      setUploads((u) => [...u, { id, loading: true }]);
+    // 1) Create a placeholder for each file
+    const newUploads = fileArray.map((file, idx) => ({
+      id: `${Date.now()}-${idx}`, // simple unique ID
+      file,
+      uploading: true,
+    }));
+    setUploads((prev) => [...prev, ...newUploads]);
 
+    // 2) Upload each file individually
+    newUploads.forEach(async (item) => {
       try {
-        // upload this single file
-        const [res] = await uploadFiles("imageUploader", { files: [file] });
-        // update that item with its real URL
-        setUploads((u) =>
-          u.map((item) =>
-            item.id === id
-              ? { id, url: res.ufsUrl, loading: false }
-              : item
+        const [res] = await uploadFiles("imageUploader", {
+          files: [item.file],
+        });
+        // 3) When it’s done, swap in the URL
+        setUploads((prev) =>
+          prev.map((u) =>
+            u.id === item.id
+              ? { ...u, url: res.ufsUrl, uploading: false }
+              : u
           )
         );
       } catch (err: any) {
-        alert(`Upload error for ${file.name}: ${err.message}`);
-        // remove the placeholder on failure
-        setUploads((u) => u.filter((item) => item.id !== id));
+        alert(`Upload error for ${item.file.name}: ${err.message}`);
+        // remove on failure
+        setUploads((prev) => prev.filter((u) => u.id !== item.id));
       }
     });
   };
@@ -55,7 +61,7 @@ export default function Upload88() {
           marginTop: 24,
         }}
       >
-        {uploads.map(({ id, url, loading }) => (
+        {uploads.map(({ id, url, uploading }) => (
           <div
             key={id}
             style={{
@@ -70,12 +76,12 @@ export default function Upload88() {
               justifyContent: "center",
             }}
           >
-            {loading ? (
+            {uploading ? (
               <div className="thumb-spinner" />
             ) : (
               <img
                 src={url}
-                alt="Uploaded thumbnail"
+                alt="Thumbnail"
                 style={{
                   width: "100%",
                   height: "100%",
