@@ -1,5 +1,3 @@
-// pages/upload/88.tsx
-
 import { useState } from "react";
 import { UploadButton } from "@uploadthing/react";
 import type { OurFileRouter } from "../../lib/uploadthing";
@@ -13,9 +11,8 @@ export default function Upload88() {
 
       <UploadButton<OurFileRouter, "imageUploader">
         endpoint="imageUploader"
-        multiple
         onClientUploadComplete={(res) => {
-          // `res` is an array of objects with a `.url` property
+          // `res` is an array of { url } items—one per file
           const urls = res.map((r) => r.url);
           setUploadedUrls((prev) => [...prev, ...urls]);
         }}
